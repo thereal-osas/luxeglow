@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { api } from '../../data/api';
 import { Appointment, Service, Stylist, TimeSlot } from '../../types';
 import { AdminLayout } from '../../components/layout/AdminLayout';
@@ -23,7 +23,7 @@ function getMinDate() {
 
 export default function AdminBookingDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [appointment, setAppointment] = useState<Appointment | null>(null);
   const [services, setServices] = useState<Service[]>([]);
   const [stylists, setStylists] = useState<Stylist[]>([]);
@@ -157,11 +157,10 @@ export default function AdminBookingDetailPage() {
                         key={slot.time}
                         disabled={!slot.available}
                         onClick={() => slot.available && setForm({ ...form, time: slot.time })}
-                        className={`py-2 text-[10px] font-body font-500 transition-all ${
-                          !slot.available ? 'bg-noir-800 border border-noir-700 text-noir-700 cursor-not-allowed' :
-                          form.time === slot.time ? 'bg-gold-500 text-noir-950 border border-gold-500' :
-                          'bg-noir-800 border border-noir-700 text-noir-300 hover:border-gold-700'
-                        }`}
+                        className={`py-2 text-[10px] font-body font-500 transition-all ${!slot.available ? 'bg-noir-800 border border-noir-700 text-noir-700 cursor-not-allowed' :
+                            form.time === slot.time ? 'bg-gold-500 text-noir-950 border border-gold-500' :
+                              'bg-noir-800 border border-noir-700 text-noir-300 hover:border-gold-700'
+                          }`}
                       >
                         {slot.time}
                       </button>

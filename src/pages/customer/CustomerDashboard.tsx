@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { api } from '../../data/api';
 import { Appointment } from '../../types';
 import { CustomerLayout } from '../../components/layout/CustomerLayout';
-import { Badge, Spinner, EmptyState, Button } from '../../components/ui';
+import { Badge, Spinner } from '../../components/ui';
 
 function formatDate(d: string) {
   return new Date(d + 'T12:00:00').toLocaleDateString('en-US', {

@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../../data/api';
 import { Appointment, Service, Stylist, TimeSlot } from '../../types';
 import { CustomerLayout } from '../../components/layout/CustomerLayout';
-import { Button, Alert, Spinner, Select, Input } from '../../components/ui';
+import { Button, Alert, Spinner, Select } from '../../components/ui';
 
 function formatDate(d: string) {
   return new Date(d + 'T12:00:00').toLocaleDateString('en-US', {

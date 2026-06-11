@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { api } from '../../data/api';
 import { Appointment } from '../../types';
 import { CustomerLayout } from '../../components/layout/CustomerLayout';
@@ -18,7 +18,7 @@ function formatTime(t: string) {
 
 export default function AppointmentDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+
   const [appointment, setAppointment] = useState<Appointment | null>(null);
   const [loading, setLoading] = useState(true);
   const [cancelModal, setCancelModal] = useState(false);
@@ -56,7 +56,6 @@ export default function AppointmentDetailPage() {
   );
 
   const isUpcoming = appointment.status === 'upcoming';
-  const isPast = new Date(appointment.date) < new Date();
 
   return (
     <CustomerLayout>

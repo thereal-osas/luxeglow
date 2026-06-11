@@ -44,7 +44,6 @@ export default function BookAppointmentPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [stylists, setStylists] = useState<Stylist[]>([]);
   const [slots, setSlots] = useState<TimeSlot[]>([]);
-  const [loading, setLoading] = useState(false);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
