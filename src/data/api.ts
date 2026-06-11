@@ -17,12 +17,16 @@ import { User, Appointment, Stylist, Service, TimeSlot } from '../types';
 
 /** Supabase returns joined rows as nested objects — reshape to match our types */
 function mapAppointment(row: any): Appointment {
+  const cleanDate = row.date
+    ? (row.date.includes('T') ? row.date.split('T')[0] : row.date.split(' ')[0])
+    : '';
+
   return {
-    id: row.id,
-    userId: row.user_id,
-    stylistId: row.stylist_id,
-    serviceId: row.service_id,
-    date: row.date,
+    id: String(row.id),
+    userId: String(row.user_id),
+    stylistId: row.stylist_id ? String(row.stylist_id) : '',
+    serviceId: row.service_id ? String(row.service_id) : '',
+    date: cleanDate,
     time: row.time,
     status: row.status,
     notes: row.notes ?? undefined,
@@ -30,7 +34,7 @@ function mapAppointment(row: any): Appointment {
     // Populated relations (present when we use .select('*, service:services(*), stylist:stylists(*), user:profiles(*)'))
     stylist: row.stylist
       ? {
-        id: row.stylist.id,
+        id: String(row.stylist.id),
         name: row.stylist.name,
         specialty: row.stylist.specialty,
         bio: row.stylist.bio,
@@ -41,7 +45,7 @@ function mapAppointment(row: any): Appointment {
       : undefined,
     service: row.service
       ? {
-        id: row.service.id,
+        id: String(row.service.id),
         name: row.service.name,
         duration: row.service.duration,
         price: row.service.price,
@@ -52,7 +56,7 @@ function mapAppointment(row: any): Appointment {
       : undefined,
     user: row.user
       ? {
-        id: row.user.id,
+        id: String(row.user.id),
         firstName: row.user.first_name,
         lastName: row.user.last_name,
         email: row.user.email,

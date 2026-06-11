@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { api } from '../../data/api';
 import { Appointment } from '../../types';
 import { AdminLayout } from '../../components/layout/AdminLayout';
-import { Spinner, Badge } from '../../components/ui';
+import { Spinner, Badge, Alert } from '../../components/ui';
 
 function getDaysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate();
@@ -24,6 +24,7 @@ const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 export default function AdminCalendarPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const today = new Date();
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
@@ -31,10 +32,15 @@ export default function AdminCalendarPage() {
   const [view, setView] = useState<'month' | 'week'>('month');
 
   useEffect(() => {
-    api.getAllAppointments().then(data => {
-      setAppointments(data);
-      setLoading(false);
-    });
+    api.getAllAppointments()
+      .then(data => {
+        setAppointments(data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setError(err.message || 'Failed to fetch appointments.');
+        setLoading(false);
+      });
   }, []);
 
   const prevMonth = () => {
@@ -74,6 +80,7 @@ export default function AdminCalendarPage() {
   return (
     <AdminLayout>
       <div className="animate-fade-in-up">
+        {error && <div className="mb-6"><Alert type="error" message={error} /></div>}
         <div className="mb-8">
           <p className="text-[11px] tracking-[0.3em] uppercase text-gold-500 font-body mb-1">Schedule</p>
           <h1 className="font-display text-4xl text-noir-100 font-300">Booking Calendar</h1>

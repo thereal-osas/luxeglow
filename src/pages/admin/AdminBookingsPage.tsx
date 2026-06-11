@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../../data/api';
-import { Appointment, AppointmentStatus } from '../../types';
-import { MOCK_STYLISTS, MOCK_SERVICES } from '../../data/mockData';
+import { Appointment, AppointmentStatus, Stylist, Service } from '../../types';
 import { AdminLayout } from '../../components/layout/AdminLayout';
 import { Badge, Spinner, Select, Button, EmptyState, Modal, Alert } from '../../components/ui';
 
@@ -24,10 +23,22 @@ export default function AdminBookingsPage() {
   const [cancelModal, setCancelModal] = useState<Appointment | null>(null);
   const [cancelling, setCancelling] = useState(false);
   const [error, setError] = useState('');
+  const [stylists, setStylists] = useState<Stylist[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
 
   const load = () => {
-    api.getAllAppointments().then(data => {
-      setAppointments(data);
+    setLoading(true);
+    Promise.all([
+      api.getAllAppointments(),
+      api.getStylists(),
+      api.getServices()
+    ]).then(([apptData, stylistData, serviceData]) => {
+      setAppointments(apptData);
+      setStylists(stylistData);
+      setServices(serviceData);
+      setLoading(false);
+    }).catch((err: any) => {
+      setError(err.message || 'Failed to load bookings.');
       setLoading(false);
     });
   };
@@ -100,7 +111,7 @@ export default function AdminBookingsPage() {
               onChange={e => setFilters({ ...filters, stylist: e.target.value })}
             >
               <option value="">All Stylists</option>
-              {MOCK_STYLISTS.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+              {stylists.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
             </Select>
             <Select
               label="Service"
@@ -108,7 +119,7 @@ export default function AdminBookingsPage() {
               onChange={e => setFilters({ ...filters, service: e.target.value })}
             >
               <option value="">All Services</option>
-              {MOCK_SERVICES.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+              {services.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
             </Select>
             <div>
               <label className="block text-[10px] tracking-[0.2em] uppercase text-noir-400 mb-2 font-body">Date</label>

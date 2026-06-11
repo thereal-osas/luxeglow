@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { api } from '../../data/api';
 import { Appointment } from '../../types';
 import { AdminLayout } from '../../components/layout/AdminLayout';
-import { Badge, Spinner } from '../../components/ui';
+import { Badge, Spinner, Alert } from '../../components/ui';
 
 function formatDate(d: string) {
   return new Date(d + 'T12:00:00').toLocaleDateString('en-US', {
@@ -19,12 +19,18 @@ function formatTime(t: string) {
 export default function AdminDashboard() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    api.getAllAppointments().then(data => {
-      setAppointments(data);
-      setLoading(false);
-    });
+    api.getAllAppointments()
+      .then(data => {
+        setAppointments(data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setError(err.message || 'Failed to fetch appointments.');
+        setLoading(false);
+      });
   }, []);
 
   const upcoming = appointments.filter(a => a.status === 'upcoming');
@@ -38,6 +44,7 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="animate-fade-in-up">
+        {error && <div className="mb-6"><Alert type="error" message={error} /></div>}
         <div className="mb-10">
           <p className="text-[11px] tracking-[0.3em] uppercase text-gold-500 font-body mb-1">Overview</p>
           <h1 className="font-display text-4xl md:text-5xl text-noir-100 font-300">Admin Dashboard</h1>
