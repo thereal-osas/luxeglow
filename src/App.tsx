@@ -24,7 +24,7 @@ import AdminCalendarPage from './pages/admin/AdminCalendarPage';
 //import TestConnection from './TestConnection';
 
 //Coming Soon page
-import ComingSoonPage from './pages/ComingSoonPage';
+
 
 function App() {
   return (
