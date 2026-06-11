@@ -10,18 +10,18 @@ import RegisterPage from './pages/auth/RegisterPage';
 import AdminLoginPage from './pages/auth/AdminLoginPage';
 
 // Customer pages
-// import CustomerDashboard from './pages/customer/CustomerDashboard';
-// import AppointmentsPage from './pages/customer/AppointmentsPage';
-// import AppointmentDetailPage from './pages/customer/AppointmentDetailPage';
-// import EditAppointmentPage from './pages/customer/EditAppointmentPage';
-// import BookAppointmentPage from './pages/customer/BookAppointmentPage';
+import CustomerDashboard from './pages/customer/CustomerDashboard';
+import AppointmentsPage from './pages/customer/AppointmentsPage';
+import AppointmentDetailPage from './pages/customer/AppointmentDetailPage';
+import EditAppointmentPage from './pages/customer/EditAppointmentPage';
+import BookAppointmentPage from './pages/customer/BookAppointmentPage';
 
 // Admin pages
-// import AdminDashboard from './pages/admin/AdminDashboard';
-// import AdminBookingsPage from './pages/admin/AdminBookingsPage';
-// import AdminBookingDetailPage from './pages/admin/AdminBookingDetailPage';
-// import AdminCalendarPage from './pages/admin/AdminCalendarPage';
-// import TestConnection from './TestConnection';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminBookingsPage from './pages/admin/AdminBookingsPage';
+import AdminBookingDetailPage from './pages/admin/AdminBookingDetailPage';
+import AdminCalendarPage from './pages/admin/AdminCalendarPage';
+//import TestConnection from './TestConnection';
 
 //Coming Soon page
 import ComingSoonPage from './pages/ComingSoonPage';
@@ -39,33 +39,33 @@ function App() {
 
           {/* Customer (protected) */}
           <Route path="/dashboard" element={
-            <ProtectedRoute><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute><CustomerDashboard /></ProtectedRoute>
           } />
           <Route path="/appointments" element={
-            <ProtectedRoute><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute><AppointmentsPage /></ProtectedRoute>
           } />
           <Route path="/appointments/:id" element={
-            <ProtectedRoute><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute><AppointmentDetailPage /></ProtectedRoute>
           } />
           <Route path="/appointments/:id/edit" element={
-            <ProtectedRoute><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute><EditAppointmentPage /></ProtectedRoute>
           } />
           <Route path="/book" element={
-            <ProtectedRoute><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute><BookAppointmentPage /></ProtectedRoute>
           } />
 
           {/* Admin (protected, admin-only) */}
           <Route path="/admin" element={
-            <ProtectedRoute requireAdmin><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>
           } />
           <Route path="/admin/bookings" element={
-            <ProtectedRoute requireAdmin><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute requireAdmin><AdminBookingsPage /></ProtectedRoute>
           } />
           <Route path="/admin/bookings/:id" element={
-            <ProtectedRoute requireAdmin><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute requireAdmin><AdminBookingDetailPage /></ProtectedRoute>
           } />
           <Route path="/admin/calendar" element={
-            <ProtectedRoute requireAdmin><ComingSoonPage /></ProtectedRoute>
+            <ProtectedRoute requireAdmin><AdminCalendarPage /></ProtectedRoute>
           } />
 
           {/* Fallback */}

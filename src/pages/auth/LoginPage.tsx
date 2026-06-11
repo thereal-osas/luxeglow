@@ -128,7 +128,7 @@ export default function LoginPage() {
           <div className="mt-4 text-center">
             <Link
               to="/admin/login"
-              className="text-[10px] tracking-widest uppercase text-noir-700 hover:text-noir-400 transition-colors font-body"
+              className="text-[14px] tracking-widest uppercase text-noir-700 hover:text-noir-400 transition-colors font-body"
             >
               Admin Access →
             </Link>
